@@ -43,6 +43,7 @@ def get_complement(nucleotide):
     else:
         print "Invalid Arguemnt not a nucleotide"
         return None
+
 def get_reverse_complement(dna):
     """ Computes the reverse complementary sequence of DNA for the specfied DNA
         sequence
@@ -86,9 +87,8 @@ def rest_of_ORF(dna):
     while i<limit: #don't loop pase string length
 
         #first break the loop if we see a stop codon
-        if dna[i:i+3] == 'TAA' or dna[i:i+3] == 'TAG' or dna[i:i+3] == 'TGA':
+        if dna[i:i+3] in ['TAA','TAG','TGA']:
             break
-
         #add dna triple to new_string
         new_string= new_string + dna[i:i+3]
 
