@@ -76,8 +76,6 @@ def rest_of_ORF(dna):
     >>> rest_of_ORF("ATGAGATAGG")
     'ATGAGA'
     """
-    # TODO: implement this
-    pass
     #Stop Codons TAA, TAG, TGA
 
     limit = len(dna) #once we pass limit we stop while loop
@@ -111,8 +109,7 @@ def find_all_ORFs_oneframe(dna):
     >>> find_all_ORFs_oneframe("ATGCATGAATGTAGATAGATGTGCCC")
     ['ATGCATGAATGTAGA', 'ATGTGCCC']
     """
-    # TODO: implement this
-    pass
+
     dna_list = [] #add items to dna_list.  return dna_list at the end
     i = 0 #tells position inside of string dna
 
@@ -139,8 +136,7 @@ def find_all_ORFs(dna):
     >>> find_all_ORFs("ATGCATGAATGTAG")
     ['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG']
     """
-    # TODO: implement this
-    pass
+
     dna_list = []
     for i in range(3):
         dna_list = dna_list + find_all_ORFs_oneframe(dna[i:])
