@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-YOUR HEADER COMMENT HERE
+gene_finder parses dna codons.  Currently uses a single string as argument.
 
 @author: Nathan Yee
 
@@ -30,8 +30,6 @@ def get_complement(nucleotide):
     >>> get_complement('C')
     'G'
     """
-    # TODO: implement this
-    pass
 
     #series of if elif statements that return complementary nucleotides
     if nucleotide == 'A':
@@ -42,7 +40,9 @@ def get_complement(nucleotide):
         return 'G'
     elif nucleotide == 'G':
         return 'C'
-
+    else:
+        print "Invalid Arguemnt not a nucleotide"
+        return None
 def get_reverse_complement(dna):
     """ Computes the reverse complementary sequence of DNA for the specfied DNA
         sequence
@@ -54,8 +54,6 @@ def get_reverse_complement(dna):
     >>> get_reverse_complement("CCGCGTTCA")
     'TGAACGCGG'
     """
-    # TODO: implement this
-    pass
 
     new_string = ""
 
@@ -158,8 +156,6 @@ def find_all_ORFs_both_strands(dna):
     >>> find_all_ORFs_both_strands("ATGCGAATGTAGCATCAAA")
     ['ATGCGAATG', 'ATGCTACATTCGCAT']
     """
-    # TODO: implement this
-    pass
 
     string_list = [dna, get_reverse_complement(dna)] #string_list contains both dna strands
     dna_list = [] #add orf's to list then return
@@ -178,9 +174,6 @@ def longest_ORF(dna):
     >>> longest_ORF("ATGCGAATGTAGCATCAAA")
     'ATGCTACATTCGCAT'
     """
-    # TODO: implement this
-    pass
-
 
 def longest_ORF_noncoding(dna, num_trials):
     """ Computes the maximum length of the longest ORF over num_trials shuffles
@@ -189,8 +182,6 @@ def longest_ORF_noncoding(dna, num_trials):
         dna: a DNA sequence
         num_trials: the number of random shuffles
         returns: the maximum length longest ORF """
-    # TODO: implement this
-    pass
 
 
 def coding_strand_to_AA(dna):
@@ -207,9 +198,6 @@ def coding_strand_to_AA(dna):
         >>> coding_strand_to_AA("ATGCCCGCTTT")
         'MPA'
     """
-    # TODO: implement this
-    pass
-
 
 def gene_finder(dna):
     """ Returns the amino acid sequences that are likely coded by the specified dna
@@ -217,8 +205,6 @@ def gene_finder(dna):
         dna: a DNA sequence
         returns: a list of all amino acid sequences coded by the sequence dna.
     """
-    # TODO: implement this
-    pass
 
 if __name__ == "__main__":
     import doctest
