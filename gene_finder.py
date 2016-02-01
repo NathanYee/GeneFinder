@@ -58,8 +58,8 @@ def get_reverse_complement(dna):
 
     new_string = ""
 
-    for i in range(len(dna)-1,-1,-1): #iterate from the last index to the first index
-        new_string = new_string + get_complement(dna[i])
+    for i in dna[::-1]: #iterate from the last index to the first index
+        new_string = new_string + get_complement(i)
 
     return new_string
 
