@@ -29,6 +29,8 @@ def get_complement(nucleotide):
     'T'
     >>> get_complement('C')
     'G'
+    >>> get_complement('G')
+    'C'
     """
 
     #series of if elif statements that return complementary nucleotides
@@ -163,13 +165,20 @@ def find_all_ORFs_both_strands(dna):
             dna_list.append(item)
 
     return dna_list
-    
+
 def longest_ORF(dna):
     """ Finds the longest ORF on both strands of the specified DNA and returns it
         as a string
     >>> longest_ORF("ATGCGAATGTAGCATCAAA")
     'ATGCTACATTCGCAT'
     """
+    strands = find_all_ORFs_both_strands(dna)
+    longest_strand = ""
+
+    for i in strands:
+        if len(longest_strand) < len(i):
+            longest_strand = i
+    return longest_strand
 
 def longest_ORF_noncoding(dna, num_trials):
     """ Computes the maximum length of the longest ORF over num_trials shuffles
@@ -178,7 +187,7 @@ def longest_ORF_noncoding(dna, num_trials):
         dna: a DNA sequence
         num_trials: the number of random shuffles
         returns: the maximum length longest ORF """
-
+    return len(longest_ORF)
 
 def coding_strand_to_AA(dna):
     """ Computes the Protein encoded by a sequence of DNA.  This function
@@ -194,6 +203,59 @@ def coding_strand_to_AA(dna):
         >>> coding_strand_to_AA("ATGCCCGCTTT")
         'MPA'
     """
+    i = 0
+    protein = ""
+    amino = ""
+    for i in range(0,len(dna),3):
+        triple = dna[i:i+3]
+
+        if len (triple) == 3: 
+            if triple in ["TTT","TTC"]:
+                amino = "F"
+            elif triple in ['TTA','TTG','CTT','CTC','CTA','CTG']:
+                amino = "L"
+            elif triple in ['ATT','ATC','ATA']:
+                amino = "I"
+            elif triple in ["ATG"]:
+                amino = "M"
+            elif triple in ['GTT','GTC','GTA','GTG']:
+                amino = "V"
+            elif triple in ['TCT','TCC','TCA','TCG']:
+                amino = "S"
+            elif triple in ['CCT','CCC','CCA','CCG']:
+                amino = "P"
+            elif triple in ['ACT','ACC','ACA','ACG']:
+                amino = "T"
+            elif triple in ['GCT','GCC','GCA','GCG']:
+                amino = "A"
+            elif triple in ['TAT','TAC']:
+                amino = "Y"
+            elif triple in ['CAT','CAC']:
+                amino = "H"
+            elif triple in ['CAA','CAG']:
+                amino = "Q"
+            elif triple in ['AAT','AAC']:
+                amino = "N"
+            elif triple in ['AAA','AAG']:
+                amino = "K"
+            elif triple in ['GAT','GAC']:
+                amino = "D"
+            elif triple in ['GAA','GAG']:
+                amino = "E"
+            elif triple in ['TGT','TGC']:
+                amino = "C"
+            elif triple in ['TGG']:
+                amino = "W"
+            elif triple in ['CGT','CGC','CGA','CGG']:
+                amino = "R"
+            elif triple in ['AGT','AGC']:
+                amino = "S"
+            elif triple in ['AGT','AGC']:
+                amino = "R"
+            elif triple in ['GGT','GGC','GGA','GGG']:
+                amino = "G"
+            protein = protein + amino 
+    return protein
 
 def gene_finder(dna):
     """ Returns the amino acid sequences that are likely coded by the specified dna
