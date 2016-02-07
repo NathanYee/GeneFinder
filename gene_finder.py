@@ -140,7 +140,7 @@ def find_all_ORFs(dna):
     """
 
     dna_list = []
-    for i in range(3):
+    for i in range(3): #go through each possible frames
         dna_list = dna_list + find_all_ORFs_oneframe(dna[i:])
     return dna_list
 
@@ -172,13 +172,13 @@ def longest_ORF(dna):
     >>> longest_ORF("ATGCGAATGTAGCATCAAA")
     'ATGCTACATTCGCAT'
     """
-    strands = find_all_ORFs_both_strands(dna)
-    longest_strand = ""
+    strands = find_all_ORFs_both_strands(dna) #get the strands for a string of dna
+    longest_strand = "" #declare longest_strand variable
 
-    for i in strands:
-        if len(longest_strand) < len(i):
-            longest_strand = i
-    return longest_strand
+    for i in strands: #go through all the strands
+        if len(longest_strand) < len(i): #compares length of current longest strand do index
+            longest_strand = i #assign new longest strand if index is greater than previous
+    return longest_strand #return the longest strand as a string
 
 def longest_ORF_noncoding(dna, num_trials):
     """ Computes the maximum length of the longest ORF over num_trials shuffles
@@ -187,12 +187,12 @@ def longest_ORF_noncoding(dna, num_trials):
         dna: a DNA sequence
         num_trials: the number of random shuffles
         returns: the maximum length longest ORF """
-    maximum_length = 0
-    for i in range(num_trials):
-        shuffled = longest_ORF(shuffle_string(dna))
-        if len(shuffled) > maximum_length:
-            maximum_length = len(shuffled)
-    return maximum_length
+    maximum_length = 0 #maximum length will store the strand with the maximum length
+    for i in range(num_trials): #run program num_trials times
+        shuffled = longest_ORF(shuffle_string(dna)) #get the longest string frum shuffled input
+        if len(shuffled) > maximum_length: #compare length of string to previous maximum
+            maximum_length = len(shuffled) #assign new maximum if true
+    return maximum_length #return the length as an int
 
 def coding_strand_to_AA(dna):
     """ Computes the Protein encoded by a sequence of DNA.  This function
@@ -209,12 +209,14 @@ def coding_strand_to_AA(dna):
         'MPA'
     """
     i = 0
-    protein = ""
-    amino = ""
-    for i in range(0,len(dna),3):
-        triple = dna[i:i+3]
+    protein = "" #protein stores each amino value for triples
+    amino = "" #a value which we append to protein, will change depending on triple catigorization
+    for i in range(0,len(dna),3): #we step 3 because we want triples
+        triple = dna[i:i+3] #get the next three codons from dna
 
-        if len (triple) == 3: 
+        if len (triple) == 3: #make sure triple has length 3, appending occures at the end of this statement
+            #lots of if elif statements to categorize dna to amino acid
+            #each will assign a new value to amino
             if triple in ["TTT","TTC"]:
                 amino = "F"
             elif triple in ['TTA','TTG','CTT','CTC','CTA','CTG']:
@@ -259,8 +261,9 @@ def coding_strand_to_AA(dna):
                 amino = "R"
             elif triple in ['GGT','GGC','GGA','GGG']:
                 amino = "G"
-            protein = protein + amino 
-    return protein
+            # end categorization
+            protein = protein + amino #append amino value to protein
+    return protein #return string
 
 def gene_finder(dna):
     """ Returns the amino acid sequences that are likely coded by the specified dna
