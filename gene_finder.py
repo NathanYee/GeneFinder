@@ -188,11 +188,13 @@ def longest_ORF_noncoding(dna, num_trials):
         num_trials: the number of random shuffles
         returns: the maximum length longest ORF """
     maximum_length = 0 #maximum length will store the strand with the maximum length
+    string = "" #this is the string that we will return
     for i in range(num_trials): #run program num_trials times
         shuffled = longest_ORF(shuffle_string(dna)) #get the longest string frum shuffled input
         if len(shuffled) > maximum_length: #compare length of string to previous maximum
             maximum_length = len(shuffled) #assign new maximum if true
-    return maximum_length #return the length as an int
+            string = shuffled
+    return string
 
 def coding_strand_to_AA(dna):
     """ Computes the Protein encoded by a sequence of DNA.  This function
@@ -217,6 +219,7 @@ def coding_strand_to_AA(dna):
         if len (triple) == 3: #make sure triple has length 3, appending occures at the end of this statement
             #lots of if elif statements to categorize dna to amino acid
             #each will assign a new value to amino
+            #yes I do know about dictionaries
             if triple in ["TTT","TTC"]:
                 amino = "F"
             elif triple in ['TTA','TTG','CTT','CTC','CTA','CTG']:
@@ -271,6 +274,17 @@ def gene_finder(dna):
         dna: a DNA sequence
         returns: a list of all amino acid sequences coded by the sequence dna.
     """
+    AA_list = []
+    threshold = longest_ORF_noncoding(dna,1500)
+    all_ORFs = find_all_ORFs_both_strands(dna)
+    for item in all_ORFs:
+        if len(item) > len(threshold):
+            AA_list.append(coding_strand_to_AA(item))
+    return AA_list
+
+from load import load_seq
+dna = load_seq("./data/X73525.fa")
+print gene_finder(dna)
 
 if __name__ == "__main__":
     import doctest
