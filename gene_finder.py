@@ -47,6 +47,7 @@ def get_reverse_complement(dna):
     'TGAACGCGG'
     """
 
+    return ''.join(get_complement(n) for n in dna[::-1])
     new_string = ""
 
     for i in dna[::-1]: #iterate from the last index to the first index
