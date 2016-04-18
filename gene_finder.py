@@ -210,63 +210,10 @@ def coding_strand_to_AA(dna):
         >>> coding_strand_to_AA("ATGCCCGCTTT")
         'MPA'
     """
-    i = 0
     protein = "" #protein stores each amino value for triples
-    amino = "" #a value which we append to protein, will change depending on triple catigorization
-    for i in range(0,len(dna),3): #we step 3 because we want triples
-        triple = dna[i:i+3] #get the next three codons from dna
-
-        if len (triple) == 3: #make sure triple has length 3, appending occures at the end of this statement
-            #lots of if elif statements to categorize dna to amino acid
-            #each will assign a new value to amino
-            #yes I do know about dictionaries
-            if triple in ["TTT","TTC"]:
-                amino = "F"
-            elif triple in ['TTA','TTG','CTT','CTC','CTA','CTG']:
-                amino = "L"
-            elif triple in ['ATT','ATC','ATA']:
-                amino = "I"
-            elif triple in ["ATG"]:
-                amino = "M"
-            elif triple in ['GTT','GTC','GTA','GTG']:
-                amino = "V"
-            elif triple in ['TCT','TCC','TCA','TCG']:
-                amino = "S"
-            elif triple in ['CCT','CCC','CCA','CCG']:
-                amino = "P"
-            elif triple in ['ACT','ACC','ACA','ACG']:
-                amino = "T"
-            elif triple in ['GCT','GCC','GCA','GCG']:
-                amino = "A"
-            elif triple in ['TAT','TAC']:
-                amino = "Y"
-            elif triple in ['CAT','CAC']:
-                amino = "H"
-            elif triple in ['CAA','CAG']:
-                amino = "Q"
-            elif triple in ['AAT','AAC']:
-                amino = "N"
-            elif triple in ['AAA','AAG']:
-                amino = "K"
-            elif triple in ['GAT','GAC']:
-                amino = "D"
-            elif triple in ['GAA','GAG']:
-                amino = "E"
-            elif triple in ['TGT','TGC']:
-                amino = "C"
-            elif triple in ['TGG']:
-                amino = "W"
-            elif triple in ['CGT','CGC','CGA','CGG']:
-                amino = "R"
-            elif triple in ['AGT','AGC']:
-                amino = "S"
-            elif triple in ['AGT','AGC']:
-                amino = "R"
-            elif triple in ['GGT','GGC','GGA','GGG']:
-                amino = "G"
-            # end categorization
-            protein = protein + amino #append amino value to protein
-    return protein #return string
+    for i in range(0, len(dna)-2, 3):
+        protein.join(aa_table[dna[i:i+3]])
+    return protein
 
 def gene_finder(dna):
     """ Returns the amino acid sequences that are likely coded by the specified dna
@@ -286,8 +233,9 @@ start_time = time.time()
 from load import load_contigs 
 contigs = load_contigs()
 name,dna = contigs[5]
+dna = dna[1:10000]
 
-print gene_finder(dna)
+gene_finder(dna)
 print("---%s seconds ---" % (time.time()-start_time))
 
 if __name__ == "__main__":
