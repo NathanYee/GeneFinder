@@ -19,6 +19,7 @@ def shuffle_string(s):
 
 # YOU WILL START YOUR IMPLEMENTATION FROM HERE DOWN ###
 
+complement_dict = {'A':'T', 'T':'A', 'C':'G', 'G':'C'}
 
 def get_complement(nucleotide):
     """ Returns the complementary nucleotide
@@ -32,19 +33,7 @@ def get_complement(nucleotide):
     >>> get_complement('G')
     'C'
     """
-
-    #series of if elif statements that return complementary nucleotides
-    if nucleotide == 'A':
-        return 'T'
-    elif nucleotide == 'T':
-        return 'A'
-    elif nucleotide == 'C':
-        return 'G'
-    elif nucleotide == 'G':
-        return 'C'
-    else:
-        print "Invalid Arguemnt not a nucleotide"
-        return "A"
+    return complement_dict[nucleotide]
 
 def get_reverse_complement(dna):
     """ Computes the reverse complementary sequence of DNA for the specfied DNA
