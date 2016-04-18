@@ -9,7 +9,7 @@ gene_finder parses dna codons.  Currently uses a single string as argument.
 import random
 from amino_acids import aa, codons, aa_table   # you may find these useful
 from load import load_seq
-
+import time
 
 def shuffle_string(s):
     """Shuffles the characters in the input string
@@ -44,7 +44,7 @@ def get_complement(nucleotide):
         return 'C'
     else:
         print "Invalid Arguemnt not a nucleotide"
-        return None
+        return "A"
 
 def get_reverse_complement(dna):
     """ Computes the reverse complementary sequence of DNA for the specfied DNA
@@ -282,9 +282,13 @@ def gene_finder(dna):
             AA_list.append(coding_strand_to_AA(item))
     return AA_list
 
-from load import load_seq
-dna = load_seq("./data/X73525.fa")
+start_time = time.time()
+from load import load_contigs 
+contigs = load_contigs()
+name,dna = contigs[5]
+
 print gene_finder(dna)
+print("---%s seconds ---" % (time.time()-start_time))
 
 if __name__ == "__main__":
     import doctest
