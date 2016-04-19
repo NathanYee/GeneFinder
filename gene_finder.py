@@ -80,7 +80,7 @@ def rest_of_ORF(dna):
         if dna[i:i+3] in ['TAA','TAG','TGA']:
             break
         #add dna triple to new_string
-        new_string= new_string + dna[i:i+3]
+        new_string = new_string + dna[i:i+3]
 
         #increase counter by 3 because we added triple
         i = i + 3
@@ -128,7 +128,6 @@ def find_all_ORFs(dna):
     >>> find_all_ORFs("ATGCATGAATGTAG")
     ['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG']
     """
-
     dna_list = []
     for i in range(3): #go through each possible frames
         dna_list = dna_list + find_all_ORFs_oneframe(dna[i:])
@@ -149,9 +148,8 @@ def find_all_ORFs_both_strands(dna):
     dna_list = [] #add orf's to list then return
 
 
-    for list in string_list:
-        temp_list = find_all_ORFs(list)
-        for item in temp_list:
+    for temp in string_list:
+        for item in find_all_ORFs(temp):
             dna_list.append(item)
 
     return dna_list
@@ -177,14 +175,9 @@ def longest_ORF_noncoding(dna, num_trials):
         dna: a DNA sequence
         num_trials: the number of random shuffles
         returns: the maximum length longest ORF """
-    maximum_length = 0 #maximum length will store the strand with the maximum length
-    string = "" #this is the string that we will return
-    for i in range(num_trials): #run program num_trials times
-        shuffled = longest_ORF(shuffle_string(dna)) #get the longest string frum shuffled input
-        if len(shuffled) > maximum_length: #compare length of string to previous maximum
-            maximum_length = len(shuffled) #assign new maximum if true
-            string = shuffled
-    return string
+
+    return max(len(longest_ORF(shuffle_string(dna))) for test in xrange(num_trials))
+
 
 def coding_strand_to_AA(dna):
     """ Computes the Protein encoded by a sequence of DNA.  This function
@@ -200,9 +193,8 @@ def coding_strand_to_AA(dna):
         >>> coding_strand_to_AA("ATGCCCGCTTT")
         'MPA'
     """
-    protein = "" #protein stores each amino value for triples
-    for i in range(0, len(dna)-2, 3):
-        protein.join(aa_table[dna[i:i+3]])
+    protein = ""
+    protein.join(aa_table[dna[i:i+3]] for i in xrange(0, len(dna)-2, 3))
     return protein
 
 def gene_finder(dna):
@@ -215,7 +207,7 @@ def gene_finder(dna):
     threshold = longest_ORF_noncoding(dna,1500)
     all_ORFs = find_all_ORFs_both_strands(dna)
     for item in all_ORFs:
-        if len(item) > len(threshold):
+        if len(item) > threshold:
             AA_list.append(coding_strand_to_AA(item))
     return AA_list
 
@@ -223,7 +215,6 @@ start_time = time.time()
 from load import load_contigs 
 contigs = load_contigs()
 name,dna = contigs[5]
-dna = dna[1:10000]
 
 gene_finder(dna)
 print("---%s seconds ---" % (time.time()-start_time))
