@@ -48,12 +48,6 @@ def get_reverse_complement(dna):
     """
 
     return ''.join(get_complement(n) for n in dna[::-1])
-    new_string = ""
-
-    for i in dna[::-1]: #iterate from the last index to the first index
-        new_string = new_string + get_complement(i)
-
-    return new_string
 
 def rest_of_ORF(dna):
     """ Takes a DNA sequence that is assumed to begin with a start
